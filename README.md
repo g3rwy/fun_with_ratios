@@ -1,4 +1,4 @@
-# fun_with_ratios
+# Fun with ratios
 Out of lack of motivation to coding i experimented a bit with using ratios for calculations instead of floats
 
 
@@ -29,3 +29,9 @@ Golden ratio using fibbonacci
 ```
 Those were the biggest numbers that the script could crunch
 There is also header with some stuff to work with ratios, use it if you want, just change the type from int128 to something better.
+
+So when using ratios, they are more precise than floats in simple stuff like very popular example
+0.1 + 0.2 == 0.3
+won't work using floats, but it will, very easily with ratios
+They do have problems with very large values, because we reach max int128 value quickly
+:ukraine:
