@@ -89,6 +89,14 @@ ratio leibniz(uint k){
 	return res;
 }
 
+ratio sqrt(uint n, uint iter){
+	ratio res = {n/2,1};
+	while(iter--){
+		res = mulr((ratio){1,2}, addr(res, divr((ratio){n,1},res)));
+	}
+	return res;
+}
+
 int main(int argc, char *argv[]){
 	// those are max iterations that work for those stupid ratio pi calculators lol
 	puts("Chudnovsky");
@@ -102,5 +110,8 @@ int main(int argc, char *argv[]){
 	puts("\n-------------\n");
 	puts("Golden ratio using fibbonacci");
 	print_ratio(fibr(150),40);
+	puts("\n-------------\n");
+	puts("Approximating a square root of 2");
+	print_ratio(sqrt(2,6),40);
     return 0;
 }
