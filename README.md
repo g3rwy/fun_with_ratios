@@ -26,9 +26,14 @@ Just using 355/113
 Golden ratio using fibbonacci
 26099748102093884802012313146549 / 16130531424904581415797907386349
 1.61803398874989484820458683436563811772030917
+-------------
+
+Approximating a square root of 2
+1572584048032918633353217 / 1111984844349868137938112
+1.414213562373095048801688724209698078569671875
 ```
 Those were the biggest numbers that the script could crunch
-There is also header with some stuff to work with ratios, use it if you want, just change the type from int128 to something better.
+There is also header with some stuff to work with ratios, use it if you want, just change the type from int128 to something better. I also added approximating square root of 2, after watching [this cool video by Zach Star](https://youtu.be/kc9MinCagLQ) about approximations i felt like it should be easy to integrate into the code and yeah, i got 40 digits for sqrt(2). 
 
 So when using ratios, they are more precise than floats in simple stuff like very popular example
 0.1 + 0.2 == 0.3
