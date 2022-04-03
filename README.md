@@ -3,7 +3,7 @@ Out of lack of motivation to coding i experimented a bit with using ratios for c
 
 
 They are not very precise, i used **__int128_t** so its much bigger of course and made my function to print ratio as decimal.
-They don't provide a lot of digits of pi, best approx ratio is 355/113 if you need an answer to that.
+They don't provide a lot of digits of pi, best approx ratio is [355/113](https://en.wikipedia.org/wiki/Mil%C3%BC) if you need an answer to that.
 So i used it for calculating golden ratio because its basicall dividing two fibbonacci numbers.
 
 Here is the output of compiled script:
