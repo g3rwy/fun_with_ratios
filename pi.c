@@ -3,20 +3,14 @@
 #include <stdint.h>
 #include "ratio.h"
 
-#define a1 545140134.0
-#define a2 13591409.0
-#define a3 -262537412640768000.0
-//#define a4 (426880 * sqrt(10005)) // 100.0248
+#define a1 545140134
+#define a2 13591409
+#define a3 262537412640768000
 
-typedef __int128_t int128;
 typedef __uint128_t uint128;
 
-static const uint128 UINT128_MAX = (uint128)((int128)-1);
-static const int128 INT128_MAX = UINT128_MAX >> 1;
-static const int128 INT128_MIN = -INT128_MAX - 1;
-
-int128 fib(int128 f, int128* r){ // doing this so i can save one number behind
-	int128 a = 1,b = 1,c;
+uint128 fib(uint128 f, uint128* r){
+	uint128 a = 1,b = 1,c;
 	if(f == 0) return 1;
 	
 	while(f){
@@ -29,35 +23,34 @@ int128 fib(int128 f, int128* r){ // doing this so i can save one number behind
 	return b;
 }
 
-ratio fibr(int128 f){
-	int128 r = 0;
-	int128 t = fib(f,&r);
+ratio fibr(uint128 f){
+	uint128 r = 0;
+	uint128 t = fib(f,&r);
 	
-	return (ratio){t,r};
+	return (ratio){1,t,r};
 }
 
-int128 factorial(int128 n) {
+uint128 factorial(uint128 n) {
     if (n == 0) return 1;
     return factorial(n - 1) * n;
 }
 
-ratio factr(int128 n){
-    return (ratio){factorial(n),1};
+ratio factr(uint128 n){
+    return (ratio){1,factorial(n),1};
 }
 
-ratio pi(uint k){
-	const ratio r1 = {a1,1};
-	const ratio r3 = {a3,1};
+ratio pi(unsigned k){
+	const ratio r1 = {1,a1,1};
+	const ratio r3 = {-1,a3,1};
 
-	ratio C = {8582422400,201}; // commented a4
-	ratio X = {1,1};
-	ratio L = {a2,1};
+	ratio C = {1,8582422400,201};
+	ratio X = {1,1,1};
+	ratio L = {1,a2,1};
 	ratio sum = L;
-	ratio M = {0,0};
+	ratio M = {1,0,0};
 	
-	ratio i = {1,1};
-	for(; i.a <= k;i.a++){
-		M = divr( factr(6*i.a), mulr( factr(3*i.a), powr(factr(i.a),3 ) ) );
+	for(uint128 i = 1; i <= k;i++){
+		M = divr( factr(6*i), mulr( factr(3*i), powr(factr(i),3 ) ) );
 		reduce(M);
 		L = addr(L,r1);
 		reduce(L);
@@ -73,8 +66,8 @@ ratio pi(uint k){
 }
 
 ratio leibniz(uint k){
-	ratio r = {1,3};
-	ratio res = {1,1};
+	ratio r = {1,1,3};
+	ratio res = {1,1,1};
 	
 	while(k){
 		if(k % 2 == 0) res = subr(res,r);
@@ -84,15 +77,15 @@ ratio leibniz(uint k){
 		k--;
 		reduce(res);
 	}
-	res = mulr(res,(ratio){4,1});
+	res = mulr(res,(ratio){1,4,1});
 	reduce(res);
 	return res;
 }
 
 ratio sqrt(uint n, uint iter){
-	ratio res = {n/2,1};
+	ratio res = {1,n / 2,1};
 	while(iter--){
-		res = mulr((ratio){1,2}, addr(res, divr((ratio){n,1},res)));
+		res = mulr((ratio){1,1,2}, addr(res, divr((ratio){1,n,1},res)));
 	}
 	return res;
 }
@@ -103,13 +96,13 @@ int main(int argc, char *argv[]){
 	print_ratio(pi(2),15);
 	puts("\n-------------\n");
 	puts("Leibniz series");
-	print_ratio(leibniz(42),15);
+	print_ratio(leibniz(44),15);
 	puts("\n-------------\n");
 	puts("Just using 355/113");
-	print_ratio((ratio){355,113},15);
+	print_ratio((ratio){1,355,113},15);
 	puts("\n-------------\n");
 	puts("Golden ratio using fibbonacci");
-	print_ratio(fibr(150),40);
+	print_ratio(fibr(180),68);
 	puts("\n-------------\n");
 	puts("Approximating a square root of 2");
 	print_ratio(sqrt(2,6),40);
